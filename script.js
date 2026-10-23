@@ -43,11 +43,15 @@ function playRound(playerSelection, computerSelection) {
  * I coordinate onboarding, score tracking up to 3 wins, and final results here.
  */
 function game() {
-    // ------------------------------------------------------------------------
-    // ULUGBEK'S PART INTEGRATION
-    // I call Ulugbek's function here to show pre-game console instructions
-    // ------------------------------------------------------------------------
-    showPreGameGuide();
+   // I call Ulugbek's function to show pre-game console instructions
+    const isReady = showPreGameGuide();
+
+    // I terminate safely if the player clicked Cancel on the setup confirm dialog
+    if (!isReady) {
+        console.log("Game cancelled during setup.");
+        alert("Game session terminated safely.");
+        return;
+    }
 
     let playerScore = 0;
     let computerScore = 0;
@@ -108,10 +112,59 @@ game();
 
 
 // ============================================================================
-// ULUGBEK'S PART (UX, BACKSTORY & CONSOLE GUIDE)
+// ULUGBEK'S PART: UX, BACKSTORY & CONSOLE GUIDE
 // ============================================================================
-// ULUGBEK: Define your function showPreGameGuide() here.
-// It must explain why and how to open the browser console before the game starts.
+
+/**
+ * Displays pre-game onboarding using a two-step dialog flow.
+ * Uses alert() for the backstory and confirm() for console setup and player readiness.
+ * @returns {boolean} True if player clicks OK, false if player clicks Cancel.
+ */
+function showPreGameGuide() {
+    // Step 1: Dramatic backstory alert
+    alert(
+        "MWAHAHAHA! SYSTEM HIJACKED!\n\n" +
+        "I am the Evil AI, and I have trapped Branko in the digital void! " +
+        "His clean code can no longer save you. The ONLY way to stop my evil plans " +
+        "for world domination is to beat me in Rock, Paper, Scissors!"
+    );
+
+    // Step 2: Technical console setup confirmation
+    const isReady = confirm(
+        "CRITICAL INSTRUCTION:\n" +
+        "You MUST open your Browser Console to see match results and fight back!\n\n" +
+        "HOW TO OPEN THE CONSOLE:\n" +
+        "• Chrome / Opera / Brave (Windows): Press F12 or Ctrl + Shift + I\n" +
+        "• Chrome / Opera / Brave (Mac): Press Cmd + Option + I\n" +
+        "• Safari (Mac): Enable 'Develop Menu' in Settings > Advanced, then press Cmd + Option + C\n\n" +
+        "Click OK if you have opened your console and are ready to play!\n" +
+        "Click Cancel to exit safely."
+    );
+
+    // If player clicks Cancel, return false to terminate game safely
+    if (!isReady) {
+        return false;
+    }
+
+    // Print ASCII Art Banner to the browser console
+    console.log(
+`
+  ______ __   __ _____  _         ___  _____ 
+ |  ____|\ \ / /|_   _|| |       / _ \|_   _|
+ | |__    \ V /   | |  | |      / /_\ \ | |  
+ |  __|    > <    | |  | |      |  _  | | |  
+ | |____  / . \  _| |_ | |____  | | | |_| |_ 
+ |______|/_/ \_\|_____||______| |_| |_|_____|
+
+    --- EVIL AI DEFENSE TERMINAL v1.0 ---
+`
+    );
+    console.log("System Status: Branko Locked Out.");
+    console.log("Objective: Reach 3 wins before the Evil AI to restore humanity.");
+    console.log("================================================================\n");
+
+    return true;
+}
 
 
 // ============================================================================
