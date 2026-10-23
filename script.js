@@ -115,7 +115,35 @@ game();
 
 
 // ============================================================================
-// LUNA'S PART (INPUT VALIDATION & CANCEL SAFETY)
+// LUNA'S PART: INPUT SANITIZATION & CANCEL SAFETY
 // ============================================================================
-// LUNA: Define your function getValidPlayerChoice() here.
-// It must collect input via prompt(), handle trimming/case-insensitivity, display alerts for invalid input without changing score, and return null if Cancel is pressed.
+
+/**
+ * Collects and validates the player's choice via browser prompt.
+ * Handles case-insensitivity, extra spaces, invalid input alerts, and safe Cancel exits.
+ * @returns {string|null} Capitalized valid selection ('Rock', 'Paper', 'Scissors') or null if cancelled.
+ */
+function getValidPlayerChoice() {
+    const validChoices = ["rock", "paper", "scissors"];
+
+    while (true) {
+        const input = prompt("Choose your move: Rock, Paper, or Scissors (or click Cancel to exit):");
+
+        // Handle Cancel button press safely without producing console errors
+        if (input === null) {
+            return null;
+        }
+
+        // Clean input: remove whitespace and convert to lower case for case-insensitive checking
+        const cleanedInput = input.trim().toLowerCase();
+
+        // Validate selection against allowed choices
+        if (validChoices.includes(cleanedInput)) {
+            // Return choice with first letter capitalized
+            return cleanedInput.charAt(0).toUpperCase() + cleanedInput.slice(1);
+        }
+
+        // Display clear error message on invalid input and re-prompt without altering score or round count
+        alert("Invalid choice! Please enter Rock, Paper, or Scissors. Invalid attempts do not count as a round.");
+    }
+}
