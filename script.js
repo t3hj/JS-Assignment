@@ -193,7 +193,7 @@ function showPreGameGuide() {
 // ============================================================================
 // LUNA'S PART: INPUT SANITIZATION & CANCEL SAFETY
 // ============================================================================
-
+ 
 /**
  * Collects and validates the player's choice via browser prompt.
  * Handles case-insensitivity, extra spaces, invalid input alerts, and safe Cancel exits.
@@ -231,10 +231,13 @@ function getValidPlayerChoice(roundNumber, playerScore, computerScore) {
             return cleanedInput.charAt(0).toUpperCase() + cleanedInput.slice(1);
         }
  
-        // Clear error, then loop again (score and round are untouched)
+        // Log the invalid attempt, show a clear error, then loop again
+        // (score and round number are untouched)
         if (cleanedInput === "") {
+            console.log("Invalid attempt: empty input. No round counted.");
             alert("You didn't type anything! Please enter Rock, Paper, or Scissors.\n\nThis attempt does not count as a round.");
         } else {
+            console.log(`Invalid attempt: "${input.trim().slice(0, 30)}". No round counted.`);
             alert(`"${input.trim().slice(0, 30)}" is not a valid move!\n\nPlease enter Rock, Paper, or Scissors.\nThis attempt does not count as a round.`);
         }
     }
