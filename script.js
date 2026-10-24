@@ -117,54 +117,75 @@ game();
 // ============================================================================
 // ULUGBEK'S PART: UX, BACKSTORY & CONSOLE GUIDE
 // ============================================================================
-
+ 
 /**
- * Displays pre-game onboarding using a two-step dialog flow.
- * Uses alert() for the backstory and confirm() for console setup and player readiness.
+ * Displays pre-game onboarding using a three-step dialog flow.
+ * Step 1 (alert): backstory.
+ * Step 2 (alert): what the console is, why it helps, where results appear.
+ * Step 3 (confirm): how to open it, and a ready check with a safe Cancel exit.
+ * All of this appears BEFORE the game begins and works without the console open.
  * @returns {boolean} True if player clicks OK, false if player clicks Cancel.
  */
 function showPreGameGuide() {
-    // Step 1: Dramatic backstory alert
+    // Step 1: Dramatic backstory
     alert(
         "MWAHAHAHA! SYSTEM HIJACKED!\n\n" +
         "I am the Evil AI, and I have trapped Branko in the digital void! " +
         "His clean code can no longer save you. The ONLY way to stop my evil plans " +
-        "for world domination is to beat me in Rock, Paper, Scissors!"
+        "for world domination is to beat me in Rock, Paper, Scissors!\n\n" +
+        "HOW TO WIN: Be the first to win 3 rounds. Draws give no points."
     );
-
-    // Step 2: Technical console setup confirmation
+ 
+    // Step 2: What the console is, why it is needed, where messages appear
+    alert(
+        "BEFORE WE FIGHT: THE CONSOLE\n\n" +
+        "WHAT IS IT?\n" +
+        "The browser console is a hidden panel that websites can print messages to.\n\n" +
+        "WHY DO YOU NEED IT?\n" +
+        "My full battle log appears there: every move I make, the score " +
+        "after each round and the final result.\n\n" +
+        "WHERE WILL MESSAGES APPEAR?\n" +
+        "In the Console tab of your browser's developer tools, not on the page itself. " +
+        "The page will stay blank, and that is normal!\n\n" +
+        "Click OK to see how to open it."
+    );
+ 
+    // Step 3: How to open it, plus the ready check
     const isReady = confirm(
-        "CRITICAL INSTRUCTION:\n" +
-        "You MUST open your Browser Console to see match results and fight back!\n\n" +
-        "HOW TO OPEN THE CONSOLE:\n" +
-        "• Chrome / Opera / Brave (Windows): Press F12 or Ctrl + Shift + I\n" +
-        "• Chrome / Opera / Brave (Mac): Press Cmd + Option + I\n" +
-        "• Safari (Mac): Enable 'Develop Menu' in Settings > Advanced, then press Cmd + Option + C\n\n" +
-        "Click OK if you have opened your console and are ready to play!\n" +
+        "HOW TO OPEN THE CONSOLE:\n\n" +
+        "• Chrome / Edge / Opera / Brave (Windows): F12 or Ctrl + Shift + I\n" +
+        "• Chrome / Edge / Opera / Brave (Mac): Cmd + Option + I\n" +
+        "• Firefox (Windows): Ctrl + Shift + K\n" +
+        "• Firefox (Mac): Cmd + Option + K\n" +
+        "• Safari (Mac): first enable 'Show Develop menu' in Settings > Advanced, " +
+        "then press Cmd + Option + C\n\n" +
+        "Then click the 'Console' tab at the top of the panel.\n\n" +
+        "Click OK when the console is open and you are ready to fight!\n" +
         "Click Cancel to exit safely."
     );
-
+ 
     // If player clicks Cancel, return false to terminate game safely
     if (!isReady) {
         return false;
     }
-
+ 
     // Print ASCII Art Banner to the browser console
     console.log(String.raw`
  _______   ___      ___ ___  ___               ________  ___
 |\  ___ \ |\  \    /  /|\  \|\  \             |\   __  \|\  \
-\ \   __/|\ \  \  /  / | \  \ \  \            \ \  \|\  \ \  \   
- \ \  \_|/_\ \  \/  / / \ \  \ \  \            \ \   __  \ \  \  
-  \ \  \_|\ \ \    / /   \ \  \ \  \____        \ \  \ \  \ \  \ 
+\ \   __/|\ \  \  /  / | \  \ \  \            \ \  \|\  \ \  \
+ \ \  \_|/_\ \  \/  / / \ \  \ \  \            \ \   __  \ \  \
+  \ \  \_|\ \ \    / /   \ \  \ \  \____        \ \  \ \  \ \  \
    \ \_______\ \__/ /     \ \__\ \_______\       \ \__\ \__\ \__\
     \|_______|\|__|/       \|__|\|_______|        \|__|\|__|\|__|
-                                                                 
+ 
     --- EVIL AI DEFENSE TERMINAL v1.0 ---
 `);
     console.log("System Status: Branko Locked Out.");
     console.log("Objective: Reach 3 wins before the Evil AI to restore humanity.");
+    console.log("Rules: Rock beats Scissors, Scissors beats Paper, Paper beats Rock. Draws give no points.");
     console.log("================================================================\n");
-
+ 
     return true;
 }
 
