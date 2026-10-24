@@ -81,15 +81,18 @@ const playerSelection = getValidPlayerChoice(roundNumber, playerScore, computerS
         // I evaluate the round outcome using my playRound function
         const result = playRound(playerSelection, computerSelection);
 
-        if (result === "player") {
-            playerScore++;
-            console.log(`ROUND WIN: ${playerSelection} beats ${computerSelection}!`);
-        } else if (result === "computer") {
-            computerScore++;
-            console.log(`ROUND LOSS: ${computerSelection} beats ${playerSelection}!`);
-        } else {
-            console.log(`ROUND DRAW: Both chose ${playerSelection}. No points awarded.`);
-        }
+if (result === "player") {
+    playerScore++;
+    console.log(`ROUND WIN: ${playerSelection} beats ${computerSelection}!`);
+    alert(`You chose ${playerSelection}, Evil AI chose ${computerSelection}.\n\nYou win this round! ${playerSelection} beats ${computerSelection}.`);
+} else if (result === "computer") {
+    computerScore++;
+    console.log(`ROUND LOSS: ${computerSelection} beats ${playerSelection}!`);
+    alert(`You chose ${playerSelection}, Evil AI chose ${computerSelection}.\n\nThe Evil AI wins this round! ${computerSelection} beats ${playerSelection}.`);
+} else {
+    console.log(`ROUND DRAW: Both chose ${playerSelection}. No points awarded.`);
+    alert(`You both chose ${playerSelection}.\n\nIt's a draw! No points awarded. Try again.`);
+}
 
         console.log(`SCORE BOARD -> Player: ${playerScore} | Evil AI: ${computerScore}`);
         roundNumber++;
