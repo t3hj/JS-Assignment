@@ -145,7 +145,7 @@ function showPreGameGuide() {
         "My full battle log appears there: every move I make, the score " +
         "after each round and the final result.\n\n" +
         "WHERE WILL MESSAGES APPEAR?\n" +
-        "In-game notificacions and the full log is visible in the Console tab of your browser's developer tools, not on the page itself. " +
+        "In-game notificacions and the full log is visible in the Console tab of your browser's developer tools, not on the page itself.  " +
         "The page will stay blank, and that is normal!\n\n" +
         "Click OK to see how to open it."
     );
