@@ -57,15 +57,15 @@ function game() {
     let computerScore = 0;
     let roundNumber = 1;
 
-    // I keep looping until either side reaches 3 wins
-    while (playerScore < 3 && computerScore < 3) {
+// I keep looping until either side reaches 3 wins
+while (playerScore < 3 && computerScore < 3) {
         console.log(`\n--- ROUND ${roundNumber} ---`);
 
 // --------------------------------------------------------------------
 // LUNA'S PART INTEGRATION
 // I call Luna's function here to fetch and validate user input
 // --------------------------------------------------------------------
-const playerSelection = getValidPlayerChoice(roundNumber, playerScore, computerScore);
+        const playerSelection = getValidPlayerChoice(roundNumber, playerScore, computerScore);
 
         // I handle safe termination if the user presses Cancel in Luna's prompt
         if (playerSelection === null) {
