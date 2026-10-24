@@ -61,11 +61,11 @@ function game() {
     while (playerScore < 3 && computerScore < 3) {
         console.log(`\n--- ROUND ${roundNumber} ---`);
 
-        // --------------------------------------------------------------------
-        // LUNA'S PART INTEGRATION
-        // I call Luna's function here to fetch and validate user input
-        // --------------------------------------------------------------------
-        const playerSelection = getValidPlayerChoice();
+// --------------------------------------------------------------------
+// LUNA'S PART INTEGRATION
+// I call Luna's function here to fetch and validate user input
+// --------------------------------------------------------------------
+const playerSelection = getValidPlayerChoice(roundNumber, playerScore, computerScore);
 
         // I handle safe termination if the user presses Cancel in Luna's prompt
         if (playerSelection === null) {
@@ -147,10 +147,9 @@ function showPreGameGuide() {
     }
 
     // Print ASCII Art Banner to the browser console
-    console.log(
-`
- _______   ___      ___ ___  ___               ________  ___     
-|\  ___ \ |\  \    /  /|\  \|\  \             |\   __  \|\  \    
+    console.log(String.raw`
+ _______   ___      ___ ___  ___               ________  ___
+|\  ___ \ |\  \    /  /|\  \|\  \             |\   __  \|\  \
 \ \   __/|\ \  \  /  / | \  \ \  \            \ \  \|\  \ \  \   
  \ \  \_|/_\ \  \/  / / \ \  \ \  \            \ \   __  \ \  \  
   \ \  \_|\ \ \    / /   \ \  \ \  \____        \ \  \ \  \ \  \ 
@@ -158,8 +157,7 @@ function showPreGameGuide() {
     \|_______|\|__|/       \|__|\|_______|        \|__|\|__|\|__|
                                                                  
     --- EVIL AI DEFENSE TERMINAL v1.0 ---
-`
-    );
+`);
     console.log("System Status: Branko Locked Out.");
     console.log("Objective: Reach 3 wins before the Evil AI to restore humanity.");
     console.log("================================================================\n");
@@ -175,29 +173,45 @@ function showPreGameGuide() {
 /**
  * Collects and validates the player's choice via browser prompt.
  * Handles case-insensitivity, extra spaces, invalid input alerts, and safe Cancel exits.
- * @returns {string|null} Capitalized valid selection ('Rock', 'Paper', 'Scissors') or null if cancelled.
+ * Invalid attempts re-prompt without affecting score or round count.
+ * @param {number} [roundNumber] - Current round (shown in the prompt)
+ * @param {number} [playerScore] - Player's score (shown in the prompt)
+ * @param {number} [computerScore] - Evil AI's score (shown in the prompt)
+ * @returns {string|null} 'Rock', 'Paper', 'Scissors', or null if cancelled.
  */
-function getValidPlayerChoice() {
+function getValidPlayerChoice(roundNumber, playerScore, computerScore) {
     const validChoices = ["rock", "paper", "scissors"];
-
+ 
+    // Status line so the player always knows where they are, even without the console
+    const header = (roundNumber !== undefined)
+        ? `ROUND ${roundNumber}  |  You: ${playerScore}  -  Evil AI: ${computerScore}\n\n`
+        : "";
+ 
+    const message =
+        header +
+        "Choose your move: Rock, Paper, or Scissors.\n" +
+        "(First to 3 wins. Click Cancel to exit.)";
+ 
     while (true) {
-        const input = prompt("Choose your move: Rock, Paper, or Scissors (or click Cancel to exit):");
-
-        // Handle Cancel button press safely without producing console errors
+        const input = prompt(message, "");
+ 
+        // Cancel (or a blocked dialog) returns null: exit safely, no errors
         if (input === null) {
             return null;
         }
-
-        // Clean input: remove whitespace and convert to lower case for case-insensitive checking
+ 
+        // Remove surrounding spaces and ignore capitalization
         const cleanedInput = input.trim().toLowerCase();
-
-        // Validate selection against allowed choices
+ 
         if (validChoices.includes(cleanedInput)) {
-            // Return choice with first letter capitalized
             return cleanedInput.charAt(0).toUpperCase() + cleanedInput.slice(1);
         }
-
-        // Display clear error message on invalid input and re-prompt without altering score or round count
-        alert("Invalid choice! Please enter Rock, Paper, or Scissors. Invalid attempts do not count as a round.");
+ 
+        // Clear error, then loop again (score and round are untouched)
+        if (cleanedInput === "") {
+            alert("You didn't type anything! Please enter Rock, Paper, or Scissors.\n\nThis attempt does not count as a round.");
+        } else {
+            alert(`"${input.trim().slice(0, 30)}" is not a valid move!\n\nPlease enter Rock, Paper, or Scissors.\nThis attempt does not count as a round.`);
+        }
     }
 }
