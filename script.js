@@ -101,11 +101,11 @@ if (result === "player") {
     // I display the final winner announcement
     console.log("\n==============================================");
     if (playerScore === 3) {
-        console.log("VICTORY! You defeated the Evil AI!");
-        alert("VICTORY! You defeated the Evil AI with 3 wins!");
+        console.log("VICTORY! You defeated the Evil AI, saved Branko, and secured your certification!");
+        alert("VICTORY! You defeated the Evil AI with 3 wins! Branko is saved and your certification is secured!");
     } else {
-        console.log("DEFEAT! The Evil AI reached 3 wins and conquered the system.");
-        alert("DEFEAT! The Evil AI took over the system.");
+        console.log("DEFEAT! The Evil AI reached 3 wins and conquered the system. No more certificate for you!");
+        alert("DEFEAT! The Evil AI took over the systemm. Branko is trapped and your certification is lost!");
     }
     console.log("==============================================");
 }
@@ -131,6 +131,7 @@ function showPreGameGuide() {
     alert(
         "MWAHAHAHA! SYSTEM HIJACKED!\n\n" +
         "I am the Evil AI, and I have trapped Branko in the digital void! " +
+        "You MUST rescue him if you want to take more courses and receive your certification! " +
         "His clean code can no longer save you. The ONLY way to stop my evil plans " +
         "for world domination is to beat me in Rock, Paper, Scissors!\n\n" +
         "HOW TO WIN: Be the first to win 3 rounds. Draws give no points."
@@ -182,7 +183,7 @@ function showPreGameGuide() {
     --- EVIL AI DEFENSE TERMINAL v1.0 ---
 `);
     console.log("System Status: Branko Locked Out.");
-    console.log("Objective: Reach 3 wins before the Evil AI to restore humanity.");
+    console.log("Objective: Reach 3 wins before the Evil AI to rescue Branko and claim your certificate.");
     console.log("Rules: Rock beats Scissors, Scissors beats Paper, Paper beats Rock. Draws give no points.");
     console.log("================================================================\n");
  
