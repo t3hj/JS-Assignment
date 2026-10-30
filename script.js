@@ -1,24 +1,11 @@
-// ============================================================================
-// MY CONTRIBUTION: CORE GAME ENGINE
-// ============================================================================
-
-/**
- * I use this function to generate the computer's choice randomly.
- * @returns {string} 'Rock', 'Paper', or 'Scissors'
- */
+// Core game engine
 function computerPlay() {
     const choices = ["Rock", "Paper", "Scissors"];
     const randomIndex = Math.floor(Math.random() * choices.length);
     return choices[randomIndex];
 }
 
-/**
- * Here I evaluate a single round of Rock, Paper, Scissors.
- * I return the round winner without logging directly to the console.
- * @param {string} playerSelection 
- * @param {string} computerSelection 
- * @returns {string} 'player', 'computer', or 'tie'
- */
+// Returns "player", "computer", or "tie".
 function playRound(playerSelection, computerSelection) {
     const player = playerSelection.toLowerCase().trim();
     const computer = computerSelection.toLowerCase().trim();
@@ -38,15 +25,9 @@ function playRound(playerSelection, computerSelection) {
     }
 }
 
-/**
- * This is my main game execution loop.
- * I coordinate onboarding, score tracking up to 3 wins, and final results here.
- */
 function game() {
-   // I call Ulugbek's function to show pre-game console instructions
     const isReady = showPreGameGuide();
 
-    // I terminate safely if the player clicked Cancel on the setup confirm dialog
     if (!isReady) {
         console.log("Game cancelled during setup.");
         alert("Game session terminated safely.");
@@ -57,17 +38,11 @@ function game() {
     let computerScore = 0;
     let roundNumber = 1;
 
-// I keep looping until either side reaches 3 wins
 while (playerScore < 3 && computerScore < 3) {
         console.log(`\n--- ROUND ${roundNumber} ---`);
 
-// --------------------------------------------------------------------
-// LUNA'S PART INTEGRATION
-// I call Luna's function here to fetch and validate user input
-// --------------------------------------------------------------------
         const playerSelection = getValidPlayerChoice(roundNumber, playerScore, computerScore);
 
-        // I handle safe termination if the user presses Cancel in Luna's prompt
         if (playerSelection === null) {
             console.log("Game cancelled by player.");
             alert("Game session terminated safely.");
@@ -78,7 +53,6 @@ while (playerScore < 3 && computerScore < 3) {
         console.log(`Player choice: ${playerSelection}`);
         console.log(`Evil AI choice: ${computerSelection}`);
 
-        // I evaluate the round outcome using my playRound function
         const result = playRound(playerSelection, computerSelection);
 
 if (result === "player") {
@@ -98,7 +72,6 @@ if (result === "player") {
         roundNumber++;
     }
 
-    // I display the final winner announcement
     console.log("\n==============================================");
     if (playerScore === 3) {
         console.log("VICTORY! You defeated the Evil AI, saved Branko, and secured your certification!");
@@ -110,24 +83,10 @@ if (result === "player") {
     console.log("==============================================");
 }
 
-// I start the game automatically on page load
 game();
 
-
-// ============================================================================
-// ULUGBEK'S PART: UX, BACKSTORY & CONSOLE GUIDE
-// ============================================================================
- 
-/**
- * Displays pre-game onboarding using a three-step dialog flow.
- * Step 1 (alert): backstory.
- * Step 2 (alert): what the console is, why it helps, where results appear.
- * Step 3 (confirm): how to open it, and a ready check with a safe Cancel exit.
- * All of this appears BEFORE the game begins and works without the console open.
- * @returns {boolean} True if player clicks OK, false if player clicks Cancel.
- */
+// Pre-game guide (Ulugbek). Returns false when setup is cancelled.
 function showPreGameGuide() {
-    // Step 1: Dramatic backstory
     alert(
         "MWAHAHAHA! SYSTEM HIJACKED!\n\n" +
         "I am the Evil AI, and I have trapped Branko in the digital void! " +
@@ -137,7 +96,6 @@ function showPreGameGuide() {
         "HOW TO WIN: Be the first to win 3 rounds. Draws give no points."
     );
  
-    // Step 2: What the console is, why it is needed, where messages appear
     alert(
         "BEFORE WE FIGHT: THE CONSOLE\n\n" +
         "WHAT IS IT?\n" +
@@ -151,7 +109,6 @@ function showPreGameGuide() {
         "Click OK to see how to open it."
     );
  
-    // Step 3: How to open it, plus the ready check
     const isReady = confirm(
         "HOW TO OPEN THE CONSOLE:\n\n" +
         "• Chrome / Edge / Opera / Brave (Windows): F12 or Ctrl + Shift + I\n" +
@@ -165,12 +122,10 @@ function showPreGameGuide() {
         "Click Cancel to exit safely."
     );
  
-    // If player clicks Cancel, return false to terminate game safely
     if (!isReady) {
         return false;
     }
  
-    // Print ASCII Art Banner to the browser console
     console.log(String.raw`
  _______   ___      ___ ___  ___               ________  ___
 |\  ___ \ |\  \    /  /|\  \|\  \             |\   __  \|\  \
@@ -190,24 +145,10 @@ function showPreGameGuide() {
     return true;
 }
 
-
-// ============================================================================
-// LUNA'S PART: INPUT SANITIZATION & CANCEL SAFETY
-// ============================================================================
- 
-/**
- * Collects and validates the player's choice via browser prompt.
- * Handles case-insensitivity, extra spaces, invalid input alerts, and safe Cancel exits.
- * Invalid attempts re-prompt without affecting score or round count.
- * @param {number} [roundNumber] - Current round (shown in the prompt)
- * @param {number} [playerScore] - Player's score (shown in the prompt)
- * @param {number} [computerScore] - Evil AI's score (shown in the prompt)
- * @returns {string|null} 'Rock', 'Paper', 'Scissors', or null if cancelled.
- */
+// Input validation (Luna). Invalid attempts do not count as rounds; Cancel returns null.
 function getValidPlayerChoice(roundNumber, playerScore, computerScore) {
     const validChoices = ["rock", "paper", "scissors"];
  
-    // Status line so the player always knows where they are, even without the console
     const header = (roundNumber !== undefined)
         ? `ROUND ${roundNumber}  |  You: ${playerScore}  -  Evil AI: ${computerScore}\n\n`
         : "";
@@ -220,20 +161,16 @@ function getValidPlayerChoice(roundNumber, playerScore, computerScore) {
     while (true) {
         const input = prompt(message, "");
  
-        // Cancel (or a blocked dialog) returns null: exit safely, no errors
         if (input === null) {
             return null;
         }
  
-        // Remove surrounding spaces and ignore capitalization
         const cleanedInput = input.trim().toLowerCase();
  
         if (validChoices.includes(cleanedInput)) {
             return cleanedInput.charAt(0).toUpperCase() + cleanedInput.slice(1);
         }
  
-        // Log the invalid attempt, show a clear error, then loop again
-        // (score and round number are untouched)
         if (cleanedInput === "") {
             console.log("Invalid attempt: empty input. No round counted.");
             alert("You didn't type anything! Please enter Rock, Paper, or Scissors.\n\nThis attempt does not count as a round.");
