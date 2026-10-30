@@ -85,7 +85,7 @@ if (result === "player") {
 
 game();
 
-// Pre-game guide (Ulugbek). Returns false when setup is cancelled.
+// Pre-game guide. Returns false when setup is cancelled.
 function showPreGameGuide() {
     alert(
         "MWAHAHAHA! SYSTEM HIJACKED!\n\n" +
